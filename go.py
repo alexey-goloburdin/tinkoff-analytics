@@ -19,8 +19,8 @@ BROKER_ACCOUNT_STARTED_AT = datetime.strptime(os.getenv('TINKOFF_ACCOUNT_STARTED
 
 locale.setlocale(locale.LC_ALL, 'ru_RU.UTF-8')
 client = tinvest.SyncClient(TOKEN)
-usd_course = get_usd_course()
-print(f"Текущий курс доллара по ЦБ РФ: {usd_course} руб (курс в брокере отличается)")
+usd_course = get_usd_course(client)
+print(f"Текущий курс доллара в брокере: {usd_course} руб")
 
 
 def get_portfolio_sum() -> int:
@@ -64,5 +64,5 @@ if __name__ ==  "__main__":
     profit_in_rub = portfolio_sum - sum_pay_in
     profit_in_percent = 100 * round(profit_in_rub / sum_pay_in, 4)
     print(f"Пополнения: {sum_pay_in:n} руб\n"
-          f"Текущая стоимость портфеля: {portfolio_sum:n} руб\n"
-          f"Прибыль: {profit_in_rub:n} руб ({profit_in_percent:n}%)")
+          f"Текущая  рублёвая стоимость портфеля: {portfolio_sum:n} руб\n"
+          f"Рублёвая прибыль: {profit_in_rub:n} руб ({profit_in_percent:n}%)")

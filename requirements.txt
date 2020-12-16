@@ -3,9 +3,11 @@ async-timeout==3.0.1
 attrs==20.3.0
 certifi==2020.12.5
 chardet==3.0.4
+dbf-light==1.0.0
 idna==2.10
 multidict==5.1.0
 pydantic==1.7.3
+pytz==2020.4
 requests==2.25.0
 tinvest==2.3.3
 typing-extensions==3.7.4.3
