@@ -5,7 +5,7 @@ import os
 
 import tinvest
 
-from utils import get_usd_course, get_now, localize
+from tinkoffapi import TinkoffApi
 
 
 # Токен Тиньков Инвестиций
@@ -18,17 +18,15 @@ BROKER_ACCOUNT_STARTED_AT = datetime.strptime(os.getenv('TINKOFF_ACCOUNT_STARTED
                                               '%d.%m.%Y')
 
 locale.setlocale(locale.LC_ALL, 'ru_RU.UTF-8')
-client = tinvest.SyncClient(TOKEN)
-usd_course = get_usd_course(client)
+api = TinkoffApi(api_token=TOKEN, broker_account_id=BROKER_ACCOUNT_ID)
+usd_course = api.get_usd_course()
 print(f"Текущий курс доллара в брокере: {usd_course} руб")
 
 
 def get_portfolio_sum() -> int:
     """Возвращает текущую стоимость портфеля в рублях без учета
     просто лежащих на аккаунте рублей в деньгах"""
-    positions = tinvest.PortfolioApi(client)\
-        .portfolio_get(broker_account_id=BROKER_ACCOUNT_ID)\
-        .parse_json().payload.positions
+    positions = api.get_portfolio_positions()
 
     portfolio_sum = Decimal('0')
     for position in positions:
@@ -43,13 +41,7 @@ def get_portfolio_sum() -> int:
 
 def get_sum_pay_in() -> int:
     """Возвращает сумму всех пополнений в рублях"""
-    from_ = localize(BROKER_ACCOUNT_STARTED_AT)
-    now = get_now()
-
-    operations = tinvest\
-        .OperationsApi(client)\
-        .operations_get(broker_account_id=BROKER_ACCOUNT_ID, from_=from_, to=now)\
-        .parse_json().payload.operations
+    operations = api.get_all_operations(BROKER_ACCOUNT_STARTED_AT)
 
     sum_pay_in = Decimal('0')
     for operation in operations:
