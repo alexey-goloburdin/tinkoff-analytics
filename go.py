@@ -2,7 +2,6 @@ from datetime import datetime
 from decimal import Decimal
 import locale
 import os
-from pprint import pprint
 
 import tinvest
 
@@ -57,7 +56,7 @@ if __name__ ==  "__main__":
     portfolio_sum = get_portfolio_sum()
     sum_pay_in = get_sum_pay_in()
     profit_in_rub = portfolio_sum - sum_pay_in
-    profit_in_percent = 100*round(profit_in_rub / sum_pay_in, 4)
+    profit_in_percent = 100 * round(profit_in_rub / sum_pay_in, 4)
     print(f"Пополнения: {sum_pay_in:n} руб.\n"
           f"Текущая стоимость портфеля: {portfolio_sum:n} руб.\n"
           f"Прибыль: {profit_in_rub:n} руб. ({profit_in_percent:n}%)")
