@@ -8,9 +8,14 @@ import tinvest
 from utils import get_usd_course, get_now, localize
 
 
+# Токен Тиньков Инвестиций
 TOKEN = os.getenv('TINKOFF_TOKEN')
+# Идентификатор портфеля в Тиньков инвестициях, его можно получить так:
+# tinvest.UserApi(client).accounts_get().parse_json().payload
 BROKER_ACCOUNT_ID = os.getenv('TINKOFF_BROKER_ACCOUNT')
-BROKER_ACCOUNT_STARTED_AT = datetime.strptime(os.getenv('TINKOFF_ACCOUNT_STARTED'), '%d.%m.%Y')
+# Дата, от которой будут получены пополнения портфеля
+BROKER_ACCOUNT_STARTED_AT = datetime.strptime(os.getenv('TINKOFF_ACCOUNT_STARTED'),
+                                              '%d.%m.%Y')
 
 locale.setlocale(locale.LC_ALL, 'ru_RU.UTF-8')
 client = tinvest.SyncClient(TOKEN)
