@@ -46,7 +46,10 @@ def get_sum_pay_in() -> int:
     sum_pay_in = Decimal('0')
     for operation in operations:
         if operation.operation_type.value == "PayIn":
-            sum_pay_in += Decimal(str(operation.payment))
+            payment = Decimal(str(operation.payment))
+            if operation.currency.name == "usd":
+                payment *= usd_course
+            sum_pay_in += payment
     return int(sum_pay_in)
 
 
