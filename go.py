@@ -3,12 +3,10 @@ from decimal import Decimal
 import locale
 import os
 
-import tinvest
-
 from tinkoffapi import TinkoffApi
 
 # Токен Тиньков Инвестиций
-TOKEN = os.getenv('TINKOFF_TOKEN')
+TINKOFF_TOKEN = os.getenv('TINKOFF_TOKEN')
 # Идентификатор портфеля в Тиньков инвестициях, его можно получить так:
 # tinvest.UserApi(client).accounts_get().parse_json().payload
 BROKER_ACCOUNT_ID = os.getenv('TINKOFF_BROKER_ACCOUNT')
@@ -17,12 +15,10 @@ BROKER_ACCOUNT_STARTED_AT = datetime.strptime(os.getenv('TINKOFF_ACCOUNT_STARTED
                                               '%d.%m.%Y')
 
 locale.setlocale(locale.LC_ALL, 'ru_RU.UTF-8')
-api = TinkoffApi(api_token=TOKEN, broker_account_id=BROKER_ACCOUNT_ID)
-usd_course = api.get_usd_course()
-print(f"Текущий курс доллара в брокере: {usd_course} руб")
+api = TinkoffApi(api_token=TINKOFF_TOKEN, broker_account_id=BROKER_ACCOUNT_ID)
 
 
-def get_portfolio_sum() -> int:
+def get_portfolio_sum(usd_course) -> int:
     """Возвращает текущую стоимость портфеля в рублях без учета
     просто лежащих на аккаунте рублей в деньгах"""
     positions = api.get_portfolio_positions()
@@ -38,7 +34,7 @@ def get_portfolio_sum() -> int:
     return int(portfolio_sum)
 
 
-def get_sum_pay_in() -> int:
+def get_sum_pay_in(usd_course) -> int:
     """Возвращает сумму всех пополнений в рублях"""
     operations = api.get_all_operations(BROKER_ACCOUNT_STARTED_AT)
 
