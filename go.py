@@ -3,10 +3,11 @@ from decimal import Decimal
 import locale
 import os
 
-import tinvest
-
+from dotenv import load_dotenv
 from tinkoffapi import TinkoffApi
 
+
+load_dotenv()
 
 # Токен Тиньков Инвестиций
 TOKEN = os.getenv('TINKOFF_TOKEN')
