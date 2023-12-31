@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "tinkoff-analytics"
+version = "0.1.0"
+description = ""
+authors = ["leins275 <leins275@gmail.com>"]
+readme = "README.md"
+packages = [{include = "tinkoff_analytics"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+load-dotenv = "^0.1.0"
+ipython = "^8.19.0"
+tinkoff-investments = "^0.2.0b63"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
